@@ -1,0 +1,75 @@
+.cart-product
+{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    width: 100%;
+
+    section.info
+    {
+        display: flex;
+        flex-direction: row;
+        gap: 1em;
+
+        .thumbnail-container
+        {
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            overflow: hidden;
+
+            img
+            {
+                display: block;
+                line-height: 0;
+                width: 100%;
+            }
+        }
+
+        .text
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex: 1;
+            line-height: 26px;
+
+            .cart-title
+            {
+                color: #68707d;
+            }
+
+            .prize
+            {
+                color: #68707d;
+
+                .total
+                {
+                    font-weight: 700;
+                    color: #1d2025;
+                }
+            }
+        }
+
+        .erase-container
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            i
+            {
+                color: #68707d;
+                cursor: pointer;
+            }
+        }
+    }
+
+    section.cart-button
+    {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+}
