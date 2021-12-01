@@ -1,0 +1,226 @@
+body,
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+a
+{
+    text-decoration: none;
+    color: #1FB789;
+}
+
+header.main
+{
+    background-color: #fff;
+
+    .content
+    {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 2em;
+        max-width: 1280px;
+        margin: auto;
+        padding: 1em 2em;
+        box-sizing: border-box;
+
+        .navigation
+        {
+            i
+            {
+                font-size: 20px;
+                line-height: 0;
+            }
+        }
+
+        .title
+        {
+            flex: 1;
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 25px;
+            color: rgb(30, 30, 30);
+            user-select: none;
+            margin-bottom: 5px;
+            overflow: hidden;
+        }
+
+        .cart
+        {
+            position: relative;
+
+            i
+            {
+                font-size: 20px;
+                line-height: 0;
+            }
+
+            .cart-count
+            {
+                position: absolute;
+                top: -6px;
+                right: -8px;
+                padding: 1px 7px;
+                border-radius: 100px;
+                font-size: 10px;
+                font-weight: 700;
+                color: #fff;
+                background-color: #ff7d1a;
+            }
+        }
+
+        .profile
+        {
+            i
+            {
+                font-size: 20px;
+                line-height: 0;
+            }
+        }
+    }
+}
+
+.shopping-cart
+{
+    top: 62px;
+    left: 0;
+    width: 375px;
+    padding: 0.5em;
+    box-sizing: border-box;
+
+    .shopping-cart-body
+    {
+        width: 100%;
+        border-radius: 10px;
+        background-color: #fff;
+
+        .cart-header
+        {
+            padding: 1.5em;
+            box-sizing: border-box;
+            font-weight: 700;
+            color: #1d2025;
+            border-bottom: 1px solid #e8e8ea;
+        }
+
+        .cart-content
+        {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1.5em;
+            box-sizing: border-box;
+            width: 100%;
+            height: 188px;
+
+            .cart-empty
+            {
+                span
+                {
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: #68707d;
+                }
+            }
+        }
+    }
+}
+
+.shopping-cart.opened
+{
+    display: flex;
+}
+
+.navigation-sidebar
+{
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+
+    .navigation-body
+    {
+        display: flex;
+        flex-direction: column;
+        gap: 3em;
+        flex: 0 1 250px;
+        padding: 1.5em;
+        box-sizing: border-box;
+        background-color: #fff;
+
+        header.navigation
+        {
+            .close-navigation
+            {
+                cursor: pointer;
+
+                i
+                {
+                    color: #68707d;
+                }
+            }
+        }
+
+        section.navigation
+        {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+
+            span
+            {
+                font-weight: 700;
+                color: #1d2025;
+                cursor: pointer;
+                user-select: none;
+            }
+        }
+    }
+}
+
+.navigation-sidebar.opened
+{
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    transition: background-color 0.25s;
+
+    .navigation-body
+    {
+        transform: translate(0, 0);
+        transition: transform 0.25s;
+    }
+}
+
+.navigation-sidebar.closing
+{
+    left: 0;
+    background-color: rgba(0, 0, 0, 0);
+    transition: background-color 0.25s;
+
+    .navigation-body
+    {
+        transform: translate(-250px, 0);
+        transition: transform 0.25s;
+    }
+}
+
+.navigation-sidebar.closed
+{
+    left: -100%;
+    background-color: rgba(0, 0, 0, 0);
+
+    .navigation-body
+    {
+        transform: translate(-250px, 0);
+    }
+}
