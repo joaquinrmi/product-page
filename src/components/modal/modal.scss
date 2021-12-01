@@ -1,0 +1,15 @@
+.modal
+{
+    position: absolute;
+    z-index: 3;
+}
+
+.modal.opened
+{
+    display: block;
+}
+
+.modal.closed
+{
+    display: none;
+}
