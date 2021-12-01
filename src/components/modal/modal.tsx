@@ -70,7 +70,7 @@ const Modal: React.FunctionComponent<Props> = (props) =>
     },
     []);
 
-    return <div id={props.id} className="modal opened">
+    return <div id={props.id} className="modal closed">
         {props.children}
     </div>;
 };
