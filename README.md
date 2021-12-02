@@ -2,6 +2,8 @@
 
 Solución del [desafío de frontendmentor.io](https://www.frontendmentor.io/challenges/ecommerce-product-page-UPsZ9MJp6) para construir la página de compra de un producto en un *e-commerse*.
 
+[Ver aplicación desplegada](https://joaquinrmi.github.io/product-page).
+
 ## Tecnologías utilizadas
 
 * React
