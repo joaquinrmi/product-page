@@ -11,9 +11,9 @@ export interface Props
 
 const Button: React.FunctionComponent<Props> = (props) =>
 {
-    return <button id={props.id} className="add-to-cart">
+    return <button id={props.id} className="standar-button">
         {props.icon ? <i className="fi fi-rr-shopping-cart"></i> : null}
-        <span className="content">
+        <span className="button-content">
             {props.text}
         </span>
     </button>;
