@@ -21,7 +21,7 @@ const NavBar: React.FunctionComponent<Props> = (props) =>
 
         for(let i = 0; i < items.length; ++i)
         {
-            items[i].onclick = () =>
+            (items[i].firstChild as HTMLSpanElement).onclick = () =>
             {
                 for(let j = 0; j < items.length; ++j)
                 {
