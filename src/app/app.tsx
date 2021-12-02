@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Product, { OrderData } from "../pages/product/";
 import Modal, { ModalElement } from "../components/modal/";
 import CartProduct from "../components/cart_product/";
+import NavBar from "./components/nav_bar/";
 
 import "./app.scss";
 
@@ -97,7 +98,7 @@ const App: React.FunctionComponent = () =>
     },
     []);
 
-    return <>
+    return <div className="app">
         <header className="main">
             <div className="content">
                 <div id="open-navigation" className="navigation item-button" role="button">
@@ -107,6 +108,8 @@ const App: React.FunctionComponent = () =>
                 <span className="title">
                     sneakers
                 </span>
+
+                <NavBar id="nav-bar" />
 
                 <div className="cart-container">
                     <div id="open-cart-button" className="cart item-button">
@@ -150,8 +153,10 @@ const App: React.FunctionComponent = () =>
                     </Modal>
                 </div>
 
-                <div className="profile item-button">
-                    <i className="fi fi-rr-user"></i>
+                <div className="profile-container">
+                    <div className="profile item-button">
+                        <i className="fi fi-rr-user"></i>
+                    </div>
                 </div>
             </div>
         </header>
@@ -200,7 +205,7 @@ const App: React.FunctionComponent = () =>
                 </section>
             </div>
         </div>
-    </>;
+    </div>;
 };
 
 interface ShoppingCart

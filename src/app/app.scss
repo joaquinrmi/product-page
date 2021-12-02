@@ -6,10 +6,21 @@ body,
     font-family: 'Lato', sans-serif;
 }
 
+body
+{
+    background-color: #fff;
+}
+
 a
 {
     text-decoration: none;
     color: #1FB789;
+}
+
+.app
+{
+    display: flex;
+    flex-direction: column;
 }
 
 header.main
@@ -23,7 +34,7 @@ header.main
         align-items: center;
         justify-content: flex-start;
         gap: 2em;
-        max-width: 1280px;
+        max-width: 1110px;
         margin: auto;
         padding: 1em 2em;
         box-sizing: border-box;
@@ -97,6 +108,7 @@ header.main
         width: 100%;
         border-radius: 10px;
         background-color: #fff;
+        box-shadow: 0px 10px 20px 4px #B1B1B1;
 
         .cart-header
         {
@@ -222,5 +234,58 @@ header.main
     .navigation-body
     {
         transform: translate(-250px, 0);
+    }
+}
+
+@media (min-width: 1024px)
+{
+    .app
+    {
+        gap: 5.5em;
+    }
+
+    header.main
+    {
+        padding: 0 2em;
+
+        .content
+        {
+            align-items: stretch;
+            gap: 3em;
+            padding: 0;
+            height: 112px;
+            box-sizing: border-box;
+            border-bottom: 1px solid #e8e8ea;
+
+            .navigation
+            {
+                display: none;
+            }
+
+            .title
+            {
+                display: flex;
+                align-items: center;
+                flex: 0 1 auto;
+                font-size: 27px;
+            }
+
+            .cart-container
+            {
+                display: flex;
+                align-items: center;
+            }
+
+            .profile-container
+            {
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
+    .shopping-cart
+    {
+        top: 80px;
     }
 }
