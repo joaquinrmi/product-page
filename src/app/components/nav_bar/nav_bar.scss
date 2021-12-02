@@ -1,0 +1,35 @@
+.nav-bar
+{
+    display: none;
+}
+
+@media (min-width: 1024px)
+{
+    .nav-bar
+    {
+        display: flex;
+        flex-direction: row;
+        gap: 2em;
+        flex: 1;
+
+        .nav-item
+        {
+            display: flex;
+            align-items: center;
+
+            span
+            {
+                color: #68707d;
+                user-select: none;
+                cursor: pointer;
+            }
+        }
+
+        .nav-item.active
+        {
+            padding-top: 4px;
+            border-bottom: 4px solid #ff7d1a;
+            box-sizing: border-box;
+        }
+    }
+}
