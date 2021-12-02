@@ -9,40 +9,50 @@ export interface Props
     thumbnail: Array<string>;
 }
 
+let moveGallery: (position: number) => Promise<void>;
+
+let moving = false;
+
 const Gallery: React.FunctionComponent<Props> = (props) =>
 {
-    useEffect(() =>
-    {
-        const card1 = document.getElementById(`card1-${props.id}`) as HTMLDivElement;
-        card1.classList.remove("animated-left");
-        card1.classList.remove("animated-right");
-        
-        const card2 = document.getElementById(`card2-${props.id}`) as HTMLDivElement;
-        card2.classList.remove("animated-left");
-        card2.classList.remove("animated-right");
-        
-        const card3 = document.getElementById(`card3-${props.id}`) as HTMLDivElement;
-        card3.classList.remove("animated-left");
-        card3.classList.remove("animated-right");
-    });
+    let currentPosition = 0;
 
     useEffect(() =>
     {
-        const cards = [
-            document.getElementById(`card1-${props.id}`) as HTMLDivElement,
-            document.getElementById(`card2-${props.id}`) as HTMLDivElement,
-            document.getElementById(`card3-${props.id}`) as HTMLDivElement,
+        const thumbnails = [
+            document.getElementById(`thumb-0-${props.id}`) as HTMLDivElement,
+            document.getElementById(`thumb-1-${props.id}`) as HTMLDivElement,
+            document.getElementById(`thumb-2-${props.id}`) as HTMLDivElement,
+            document.getElementById(`thumb-3-${props.id}`) as HTMLDivElement,
         ];
 
-        let currentPosition = 0;
+        moveGallery = async (position: number) =>
+        {
+            cardContainer.classList.remove(`pos${currentPosition}`);
+            cardContainer.classList.add(`pos${position}`);
 
-        const slidePosition = [
-            -1, 0, 1
-        ];
+            thumbnails[currentPosition].classList.remove("active");
+            currentPosition = position;
+            thumbnails[currentPosition].classList.add("active");
+
+            return new Promise<void>(resolve =>
+            {
+                setTimeout(() =>
+                {
+                    buttonDelay = true;
+                    resolve();
+                },
+                500);
+            });
+        };
 
         let buttonDelay = true;
 
         const leftButton = document.getElementById(`left-${props.id}`) as HTMLDivElement;
+        const rightButton = document.getElementById(`right-${props.id}`) as HTMLDivElement;
+
+        const cardContainer = document.getElementById(`card-container-${props.id}`) as HTMLDivElement;
+
         leftButton.onclick = () =>
         {
             if(currentPosition === 0)
@@ -56,48 +66,9 @@ const Gallery: React.FunctionComponent<Props> = (props) =>
             }
             buttonDelay = false;
 
-            --currentPosition;
-
-            for(let i = 0; i < cards.length; ++i)
-            {                
-                cards[i].classList.add("animated-right");
-            }
-
-            setTimeout(() =>
-            {
-                for(let i = 0; i < cards.length; ++i)
-                {
-                    switch(slidePosition[i])
-                    {
-                    case -1:
-                        cards[i].classList.remove("first");
-                        cards[i].classList.add("second");
-                        slidePosition[i] = 0;
-                        break;
-
-                    case 0:
-                        cards[i].classList.remove("second");
-                        cards[i].classList.add("third");
-                        slidePosition[i] = 1;
-                        break;
-
-                    case 1:
-                        cards[i].classList.remove("third");
-                        cards[i].classList.add("first");
-                        (cards[i].children[0] as HTMLImageElement).src = props.images[currentPosition - 1];
-                        slidePosition[i] = -1;
-                        break;
-                    }
-
-                    cards[i].classList.remove("animated-right");
-                }
-
-                buttonDelay = true;
-            },
-            500);
+            moveGallery(currentPosition - 1);
         };
 
-        const rightButton = document.getElementById(`right-${props.id}`) as HTMLDivElement;
         rightButton.onclick = () =>
         {
             if(currentPosition === props.images.length - 1)
@@ -111,45 +82,7 @@ const Gallery: React.FunctionComponent<Props> = (props) =>
             }
             buttonDelay = false;
 
-            ++currentPosition;
-
-            for(let i = 0; i < cards.length; ++i)
-            {                
-                cards[i].classList.add("animated-left");
-            }
-
-            setTimeout(() =>
-            {
-                for(let i = 0; i < cards.length; ++i)
-                {
-                    switch(slidePosition[i])
-                    {
-                    case -1:
-                        cards[i].classList.remove("first");
-                        cards[i].classList.add("third");
-                        (cards[i].children[0] as HTMLImageElement).src = props.images[currentPosition + 1];
-                        slidePosition[i] = 1;
-                        break;
-
-                    case 0:
-                        cards[i].classList.remove("second");
-                        cards[i].classList.add("first");
-                        slidePosition[i] = -1;
-                        break;
-
-                    case 1:
-                        cards[i].classList.remove("third");
-                        cards[i].classList.add("second");
-                        slidePosition[i] = 0;
-                        break;
-                    }
-
-                    cards[i].classList.remove("animated-left");
-                }
-
-                buttonDelay = true;
-            },
-            500);
+            moveGallery(currentPosition + 1);
         };
     },
     [
@@ -157,30 +90,52 @@ const Gallery: React.FunctionComponent<Props> = (props) =>
     ]);
 
     return <div id={props.id} className="gallery-container">
-        <div className="left-control-container">
-            <div id={`left-${props.id}`} className="control">
-                <i className="fi fi-rr-angle-small-left"></i>
-            </div>
-        </div>
-
-        <div className="right-control-container">
-            <div id={`right-${props.id}`} className="control">
-                <i className="fi fi-rr-angle-small-right"></i>
-            </div>
-        </div>
-
         <div className="image-slider">
-            <div id={`card1-${props.id}`} className="slider-element first">
-                <img src={props.images[0]} alt="" />
+            <div id={`card-container-${props.id}`} className="card-container">
+                {
+                    props.images.map((element, index) =>
+                    {
+                        return <div key={`card-${index}`} id={`card-${index}-${props.id}`} className="slider-element">
+                            <img src={element} alt="" />
+                        </div>
+                    })
+                }
             </div>
-            <div id={`card2-${props.id}`} className="slider-element second">
-                <img src={props.images[0]} alt="" />
+
+            <div className="left-control-container">
+                <div id={`left-${props.id}`} className="control">
+                    <i className="fi fi-rr-angle-small-left"></i>
+                </div>
             </div>
-            <div id={`card3-${props.id}`} className="slider-element third">
-                <img src={props.images[1]} alt="" />
+
+            <div className="right-control-container">
+                <div id={`right-${props.id}`} className="control">
+                    <i className="fi fi-rr-angle-small-right"></i>
+                </div>
             </div>
         </div>
-        
+
+        <div className="thumbnails-container">
+            {
+                props.thumbnail.map((element, index) =>
+                {
+                    return <div key={`thumb-${index}`} id={`thumb-${index}-${props.id}`} className={`thumbnail ${index === 0 ? "active" : ""}`} onClick={async (ev) =>
+                    {
+                        if(moving)
+                        {
+                            return;
+                        }
+                        moving = true;
+                        
+                        await moveGallery(index);
+                        moving = false;
+                    }}>
+                        <img src={element} alt="" />
+                        <div className="white-screen"></div>
+                    </div>;
+                })
+            }
+        </div>
     </div>;
 }
 
