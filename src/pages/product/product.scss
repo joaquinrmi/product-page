@@ -2,6 +2,7 @@
 {
     min-height: 100vh;
     background-color: #fff;
+    padding-bottom: 2em;
 
     .product-body
     {
@@ -13,7 +14,7 @@
             padding: 1.5em;
             box-sizing: border-box;
 
-            .title
+            .title-container
             {
                 display: flex;
                 flex-direction: column;
@@ -47,24 +48,33 @@
                 align-items: center;
                 gap: 1em;
 
-                .prize
+                .final-prize
                 {
-                    font-size: 26px;
-                    font-weight: 700;
-                    color: #1d2025;
-                }
-
-                .discount-container
-                {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 1em;
                     flex: 1;
 
-                    span
+                    .prize
                     {
+                        font-size: 26px;
                         font-weight: 700;
-                        color: #ff7d1a;
-                        padding: 0.2em 0.5em;
-                        border-radius: 6px;
-                        background-color: #ffede0;
+                        color: #1d2025;
+                    }
+
+                    .discount-container
+                    {
+                        flex: 1;
+
+                        span
+                        {
+                            font-weight: 700;
+                            color: #ff7d1a;
+                            padding: 0.2em 0.5em;
+                            border-radius: 6px;
+                            background-color: #ffede0;
+                        }
                     }
                 }
 
@@ -120,6 +130,12 @@
                         flex: 1;
                     }
                 }
+
+                .buy-button-container
+                {
+                    display: flex;
+                    flex-direction: column;
+                }
             }
         }
     }
@@ -129,4 +145,64 @@
 {
     cursor: pointer;
     user-select: none;
+}
+
+@media (min-width: 1024px)
+{
+    .product
+    {
+        max-width: 1100px;
+        min-height: initial;
+        margin: auto;
+
+        .product-body
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 3em;
+            box-sizing: border-box;
+
+            .gallery
+            {
+                flex: 0 0 450px;
+            }
+
+            .information
+            {
+                flex: 0 0 450px;
+
+                .title-container
+                {
+                    .title
+                    {
+                        font-size: 42px;
+                    }
+                }
+
+                .prize-container
+                {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 0.5em;
+                }
+
+                .buy-container
+                {
+                    flex-direction: row;
+
+                    .order
+                    {
+                        gap: 1em;
+                    }
+
+                    .buy-button-container
+                    {
+                        flex: 1;
+                    }
+                }
+            }
+        }
+    }
 }

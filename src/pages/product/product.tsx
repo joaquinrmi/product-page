@@ -111,7 +111,7 @@ const Product: React.FunctionComponent<Props> = (props) =>
             </section>
 
             <section className="information">
-                <div className="title">
+                <div className="title-container">
                     <span className="company">
                         {productData.product.company}
                     </span>
@@ -126,16 +126,18 @@ const Product: React.FunctionComponent<Props> = (props) =>
                 </div>
 
                 <div className="prize-container">
-                    <span className="prize">
-                        ${(productData.product.prize - (productData.product.prize * productData.product.discount / 100)).toFixed(2)}
-                    </span>
-
-                    <div className="discount-container">
-                        <span>
-                            {productData.product.discount}%
+                    <div className="final-prize">
+                        <span className="prize">
+                            ${(productData.product.prize - (productData.product.prize * productData.product.discount / 100)).toFixed(2)}
                         </span>
-                    </div>
 
+                        <div className="discount-container">
+                            <span>
+                                {productData.product.discount}%
+                            </span>
+                        </div>
+                    </div>
+                    
                     <span className="actually-prize">
                         ${productData.product.prize.toFixed(2)}
                     </span>
@@ -156,7 +158,9 @@ const Product: React.FunctionComponent<Props> = (props) =>
                         </span>
                     </div>
 
-                    <Button id={`add-cart-${props.id}`} text="Add to cart" icon={<i className="fi fi-rr-shopping-cart"></i>} />
+                    <div className="buy-button-container">
+                        <Button id={`add-cart-${props.id}`} text="Add to cart" icon={<i className="fi fi-rr-shopping-cart"></i>} />
+                    </div>
                 </div>
             </section>
         </section>
