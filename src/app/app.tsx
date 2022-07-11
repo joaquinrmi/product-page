@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Product, { OrderData } from "../pages/product/";
-import Modal, { ModalElement } from "../components/modal/";
+import Modal, { ModalStatus } from "../components/modal/";
 import CartProduct from "../components/cart_product/";
 import NavBar from "./components/nav_bar/";
 
@@ -9,6 +9,9 @@ import "./app.scss";
 
 const App: React.FunctionComponent = () =>
 {
+    const [ cartModalStatus, setCartModalStatus ] = useState<ModalStatus>(ModalStatus.Closed);
+    const [ cartModalPosition, setCartModalPosition ] = useState<number>(0);
+
     const [ shoppingCart, setShoppingCart ] = useState<ShoppingCart>({
         products: []
     });
@@ -44,11 +47,11 @@ const App: React.FunctionComponent = () =>
     {
         const app = document.getElementById("app") as HTMLDivElement;
 
-        const cartModal = document.getElementById("cart-modal") as ModalElement;
-
         const cartButton = document.getElementById("open-cart-button") as HTMLDivElement;
         cartButton.onclick = (ev) =>
         {
+            ev.stopPropagation();
+
             const width = app.getBoundingClientRect().width;
             const rect = cartButton.getBoundingClientRect();
 
@@ -57,46 +60,24 @@ const App: React.FunctionComponent = () =>
             {
                 position -= (position + 375 - width);
             }
-
-            ev.stopPropagation();
             
-            if(cartModal.isOpened())
+            setCartModalPosition(position);
+            setCartModalStatus((status) =>
             {
-                cartModal.close();
-            }
-            else
-            {
-                cartModal.open();
-                cartModal.style.left = `${position}px`;
-            }
+                switch(status)
+                {
+                case ModalStatus.Closed:
+                    return ModalStatus.Open;
+
+                case ModalStatus.Closing:
+                    return status;
+                    
+                case ModalStatus.Open:
+                    return ModalStatus.Closing;
+                }
+            });
         };
     });
-
-    useEffect(() =>
-    {
-        const navigationSidebar = document.getElementById("navigation-sidebar") as HTMLDivElement;
-
-        const openNavigation = document.getElementById("open-navigation") as HTMLDivElement;
-        openNavigation.onclick = () =>
-        {
-            navigationSidebar.classList.remove("closed");
-            navigationSidebar.classList.add("opened");
-        };
-
-        const closeNavigation = document.getElementById("close-navigation") as HTMLDivElement;
-        closeNavigation.onclick = () =>
-        {
-            navigationSidebar.classList.remove("opened");
-            navigationSidebar.classList.add("closing");
-            setTimeout(() =>
-            {
-                navigationSidebar.classList.remove("closing");
-                navigationSidebar.classList.add("closed");
-            },
-            250);
-        };
-    },
-    []);
 
     return <div className="app">
         <header className="main">
@@ -127,7 +108,16 @@ const App: React.FunctionComponent = () =>
                         }
                     </div>
 
-                    <Modal id="cart-modal" className="shopping-cart">
+                    <Modal
+                        id="cart-modal"
+                        className="shopping-cart"
+                        status={cartModalStatus}
+                        left={cartModalPosition}
+                        closeRequest={() =>
+                        {
+                            setCartModalStatus(ModalStatus.Closed);
+                        }}
+                    >
                         <section className="shopping-cart-body">
                             <header className="cart-header">
                                 Cart
