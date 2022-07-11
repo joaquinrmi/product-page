@@ -6,71 +6,87 @@ export interface Props
 {
     id: string;
     className?: string;
+    status: ModalStatus;
+    closeAnimationTime?: number;
+
+    closeRequest(): void;
 }
 
-export interface ModalElement extends HTMLDivElement
+export enum ModalStatus
 {
-    open(): void;
-    close(): void;
-    isOpened(): boolean;
+    Closed = "closed",
+    Closing = "closing",
+    Open = "open"
 }
 
 const Modal: React.FunctionComponent<Props> = (props) =>
 {
     useEffect(() =>
     {
-        const modal = document.getElementById(props.id) as ModalElement;
+        const modal = document.getElementById(props.id) as HTMLDivElement;
 
-        modal.open = () =>
+        if(modal === null)
         {
-            modal.classList.remove("closed");
-            modal.classList.add("opened");
-        };
-
-        modal.close = () =>
-        {
-            modal.classList.remove("opened");
-            modal.classList.add("closed");
-        };
-
-        modal.isOpened = () =>
-        {
-            return modal.classList.contains("opened");
-        };
-
-        if(props.className)
-        {
-            modal.classList.add(props.className);
+            return;
         }
-    },
-    [
-        props.id, props.className
-    ]);
 
-    useEffect(() =>
-    {
-        const modal = document.getElementById(props.id) as ModalElement;
-
-        modal.addEventListener("click", (ev) =>
+        const closeModal = (ev: MouseEvent) =>
         {
-            ev.stopPropagation();
-        });
+            if(ev.target !== modal)
+            {
+                return;
+            }
+            
+            modal.classList.remove(ModalStatus.Closed);
+            modal.classList.remove(ModalStatus.Open);
+            modal.classList.add(ModalStatus.Closing);
 
-        const closeModal = () =>
-        {
-            modal.close();
+            setTimeout(
+                () =>
+                {
+                    props.closeRequest();
+                },
+                props.closeAnimationTime || 0
+            );
         };
 
-        document.addEventListener("click", closeModal);
+        modal.addEventListener("click", closeModal);
 
         return () =>
         {
-            document.removeEventListener("click", closeModal);
+            modal.removeEventListener("click", closeModal);
         };
-    },
-    []);
+    });
 
-    return <div id={props.id} className="modal closed">
+    useEffect(() =>
+    {
+        if(props.status === ModalStatus.Closing)
+        {
+            const modal = document.getElementById(props.id) as HTMLDivElement;
+
+            if(modal === null)
+            {
+                return;
+            }
+
+            modal.classList.remove(ModalStatus.Closed);
+            modal.classList.remove(ModalStatus.Open);
+            modal.classList.add(ModalStatus.Closing);
+
+            setTimeout(
+                () =>
+                {
+                    props.closeRequest();
+                },
+                props.closeAnimationTime || 0
+            );
+        }
+    });
+
+    return <div
+        id={props.id}
+        className={`modal ${props.status} ${props.className}`}
+    >
         {props.children}
     </div>;
 };
