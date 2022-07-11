@@ -8,6 +8,8 @@ export interface Props
     className?: string;
     status: ModalStatus;
     closeAnimationTime?: number;
+    top?: number;
+    left?: number;
 
     closeRequest(): void;
 }
@@ -83,9 +85,20 @@ const Modal: React.FunctionComponent<Props> = (props) =>
         }
     });
 
+    let style: React.CSSProperties = {};
+    if(props.top !== undefined)
+    {
+        style.top = `${props.top}px`;
+    }
+    if(props.left !== undefined)
+    {
+        style.left = `${props.left}px`;
+    }
+
     return <div
         id={props.id}
         className={`modal ${props.status} ${props.className}`}
+        style={style}
     >
         {props.children}
     </div>;
