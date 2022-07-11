@@ -11,6 +11,7 @@ const App: React.FunctionComponent = () =>
 {
     const [ cartModalStatus, setCartModalStatus ] = useState<ModalStatus>(ModalStatus.Closed);
     const [ cartModalPosition, setCartModalPosition ] = useState<number>(0);
+    const [ navigationStatus, setNavigationStatus ] = useState<ModalStatus>(ModalStatus.Closed);
 
     const [ shoppingCart, setShoppingCart ] = useState<ShoppingCart>({
         products: []
@@ -82,7 +83,15 @@ const App: React.FunctionComponent = () =>
     return <div className="app">
         <header className="main">
             <div className="content">
-                <div id="open-navigation" className="navigation item-button" role="button">
+                <div
+                    id="open-navigation"
+                    className="navigation item-button"
+                    role="button"
+                    onClick={() =>
+                    {
+                        setNavigationStatus(ModalStatus.Open);
+                    }}
+                >
                     <i className="fi fi-rr-menu-burger"></i>
                 </div>
 
@@ -178,7 +187,16 @@ const App: React.FunctionComponent = () =>
             });
         }} />
 
-        <div id="navigation-sidebar" className="navigation-sidebar closed">
+        <Modal
+            id="navigation-sidebar"
+            className="navigation-sidebar"
+            status={navigationStatus}
+            closeAnimationTime={250}
+            closeRequest={() =>
+            {
+                setNavigationStatus(ModalStatus.Closed);
+            }}
+        >
             <div className="navigation-body">
                 <header className="navigation">
                     <div id="close-navigation" className="close-navigation" role="button">
@@ -194,7 +212,7 @@ const App: React.FunctionComponent = () =>
                     <span>Contact</span>
                 </section>
             </div>
-        </div>
+        </Modal>
     </div>;
 };
 
