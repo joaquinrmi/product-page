@@ -199,17 +199,39 @@ const App: React.FunctionComponent = () =>
         >
             <div className="navigation-body">
                 <header className="navigation">
-                    <div id="close-navigation" className="close-navigation" role="button">
+                    <div
+                        id="close-navigation"
+                        className="close-navigation"
+                        role="button"
+                        onClick={() =>
+                        {
+                            setNavigationStatus(ModalStatus.Closing);
+                        }}
+                    >
                         <i className="fi fi-rr-cross"></i>
                     </div>
                 </header>
 
                 <section className="navigation">
-                    <span>Collections</span>
-                    <span>Men</span>
-                    <span>Women</span>
-                    <span>About</span>
-                    <span>Contact</span>
+                    <span className="modal-link">
+                        Collections
+                    </span>
+
+                    <span className="modal-link">
+                        Men
+                    </span>
+
+                    <span className="modal-link">
+                        Women
+                    </span>
+
+                    <span className="modal-link">
+                        About
+                    </span>
+
+                    <span className="modal-link">
+                        Contact
+                    </span>
                 </section>
             </div>
         </Modal>
