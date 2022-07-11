@@ -79,7 +79,7 @@ const Gallery: React.FunctionComponent<Props> = (props) =>
                         className={`thumbnail ${index === currentPosition ? "active" : ""}`}
                         onClick={async (ev) =>
                         {
-                            
+                            setCurrentPosition(index);
                         }}
                     >
                         <img src={element} alt="" />
